@@ -1,0 +1,6 @@
+{
+    "name": "ec-europa/php-docker-infra",
+    "description": "EC PHP Docker Infrastructure.",
+    "license": "EUPL-1.1",
+    "require": {}
+}
