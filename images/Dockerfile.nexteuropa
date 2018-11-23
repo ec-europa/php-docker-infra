@@ -10,7 +10,7 @@ RUN wget https://asda.fpfis.tech.ec.europa.eu/ec-europa/drupal-settings/dist/bui
     drush cc drush
 
 # Build image
-FROM fpfis/httpd-php:5.6
+FROM fpfis/httpd-php-full:5.6
 
 # Add code
 ADD build /var/www/html
