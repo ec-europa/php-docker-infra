@@ -23,8 +23,7 @@ COPY --from=builder /root/.drush/registry_rebuild /root/.drush/registry_rebuild
 # Enable FPFIS docker config
 COPY --from=builder /conf /conf
 COPY --from=builder /infra_modules /var/www/html/sites/all/modules/fpfis
-RUN cp /var/www/html/sites/default/default.settings.php /var/www/html/sites/default/settings.php && \
-    ln -s /conf/settings.local.php /var/www/html/sites/default/settings.local.php
+RUN ln -s /conf/settings.local.php /var/www/html/sites/default/settings.php
 
 # Config user data
 VOLUME /var/www/html/sites/default/files
