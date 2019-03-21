@@ -1,7 +1,5 @@
-ARG platform_version=2.5
-
-# Download drupal7 docker config
-FROM fpfis/httpd-php-full:7.1 as builder
+# Download drupal8 docker config
+FROM fpfis/httpd-php-full:7.2 as builder
 RUN mkdir -p /conf /infra_modules/gelf_log
 RUN wget https://asda.fpfis.tech.ec.europa.eu/ec-europa/drupal-settings/dist/build-master.tar.gz -O -| tar -xzvC /conf && \
     drush @none dl registry_rebuild-7.x && \
@@ -10,7 +8,7 @@ RUN wget https://asda.fpfis.tech.ec.europa.eu/ec-europa/drupal-settings/dist/bui
     drush cc drush
 
 # Build image
-FROM fpfis/httpd-php-full:7.1
+FROM fpfis/httpd-php-full:7.2
 
 # Add code
 ADD dist /var/www/html
@@ -21,11 +19,11 @@ COPY --from=builder /usr/bin/drush /usr/bin/drush
 # Enable FPFIS docker config
 COPY --from=builder /conf /conf
 COPY --from=builder /infra_modules /var/www/html/web/modules/fpfis
-RUN ln -s /conf/settings.local.php /var/www/html/web/sites/default/settings.php
+RUN ln -s /conf/settings.local.php /var/www/html/web/sites/default/settings.override.php
 
 # Config user data
 VOLUME /var/www/html/web/sites/default/files
 VOLUME /data
-ENV D7_PRIVATE_PATH=/data
+ENV D8_PRIVATE_PATH=/data
 
 WORKDIR /var/www/html
