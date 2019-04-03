@@ -1,5 +1,5 @@
 # Download drupal8 docker config
-FROM fpfis/httpd-php-full:7.2 as builder
+FROM fpfis/httpd-php-full:7.1 as builder
 RUN mkdir -p /conf /infra_modules/gelf_log
 RUN wget https://asda.fpfis.tech.ec.europa.eu/ec-europa/drupal-settings/dist/build-master.tar.gz -O -| tar -xzvC /conf && \
     drush @none dl registry_rebuild-7.x && \
@@ -8,7 +8,7 @@ RUN wget https://asda.fpfis.tech.ec.europa.eu/ec-europa/drupal-settings/dist/bui
     drush cc drush
 
 # Build image
-FROM fpfis/httpd-php-full:7.2
+FROM fpfis/httpd-php-full:7.1
 
 # Add code
 ADD dist /var/www/html
