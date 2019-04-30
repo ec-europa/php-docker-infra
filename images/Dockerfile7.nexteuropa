@@ -12,6 +12,13 @@ RUN wget https://asda.fpfis.tech.ec.europa.eu/ec-europa/drupal-settings/dist/bui
 # Build image
 FROM fpfis/httpd-php-full:7.1
 
+#Add some packages
+RUN apt-get update -y
+RUN apt-get install software-properties-common -y
+RUN add-apt-repository ppa:jonathonf/ffmpeg-4 -y
+RUN apt-get install ffmpeg nano curl -y
+RUN apt-get install default-jdk -y
+
 # Add code
 ADD build /var/www/html
 
