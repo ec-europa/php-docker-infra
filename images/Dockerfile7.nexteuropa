@@ -18,6 +18,8 @@ RUN apt-get install software-properties-common -y
 RUN add-apt-repository ppa:jonathonf/ffmpeg-4 -y
 RUN apt-get install ffmpeg nano curl -y
 RUN apt-get install default-jdk -y
+RUN apt-get install libjpeg-turbo-progs -y
+RUN apt-get install pngcrush -y
 
 # Add code
 ADD build /var/www/html
