@@ -33,6 +33,7 @@ COPY --from=builder /root/.drush/registry_rebuild /root/.drush/registry_rebuild
 COPY --from=builder /conf /conf
 COPY --from=builder /infra_modules /var/www/html/sites/all/modules/fpfis
 RUN ln -s /conf/settings.local.php /var/www/html/sites/default/settings.php
+RUN openssl rand -hex 24 > /var/www/html/sites/default/.version
 
 # Config user data
 VOLUME /var/www/html/sites/default/files
