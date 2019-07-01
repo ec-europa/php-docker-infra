@@ -6,6 +6,7 @@ RUN mkdir -p /conf /infra_modules/gelf_log
 RUN wget https://asda.fpfis.tech.ec.europa.eu/ec-europa/drupal-settings/dist/build-master.tar.gz -O -| tar -xzvC /conf && \
     drush @none dl registry_rebuild-7.x && \
     drush dl -y --destination=/infra_modules redis-7.x && \
+    drush dl -y --destination=/infra_modules failover_db_cache-7.x && \
     wget https://github.com/ec-europa/gelf_log/archive/7.x-0.3.tar.gz -O -| tar --strip=1 -xzvC /infra_modules/gelf_log && \
     drush cc drush
 
