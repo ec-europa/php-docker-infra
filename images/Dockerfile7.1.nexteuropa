@@ -15,8 +15,7 @@ FROM fpfis/httpd-php-full:7.1
 #Add some packages
 RUN apt-get update -y
 RUN apt-get install software-properties-common -y
-RUN add-apt-repository ppa:jonathonf/ffmpeg-4 -y
-RUN apt-get install ffmpeg nano curl -y
+RUN apt-get install nano curl -y
 RUN apt-get install default-jdk -y
 RUN apt-get install libjpeg-turbo-progs -y
 RUN apt-get install pngcrush -y
