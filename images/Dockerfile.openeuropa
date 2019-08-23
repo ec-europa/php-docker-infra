@@ -1,0 +1,29 @@
+# Download drupal8 docker config
+FROM fpfis/httpd-php-full:7.1 as builder
+RUN mkdir -p /conf /infra_modules/gelf_log
+RUN wget https://asda.fpfis.tech.ec.europa.eu/ec-europa/drupal-settings/dist/build-master.tar.gz -O -| tar -xzvC /conf && \
+    drush @none dl registry_rebuild-7.x && \
+    drush dl -y --destination=/infra_modules redis-7.x && \
+    wget https://github.com/ec-europa/gelf_log/archive/7.x-0.3.tar.gz -O -| tar --strip=1 -xzvC /infra_modules/gelf_log && \
+    drush cc drush
+
+# Build image
+FROM fpfis/httpd-php-full:7.1
+
+# Add code
+ADD dist /var/www/html
+
+# Provide drush
+COPY --from=builder /usr/bin/drush /usr/bin/drush
+
+# Enable FPFIS docker config
+COPY --from=builder /conf /conf
+COPY --from=builder /infra_modules /var/www/html/web/modules/fpfis
+# RUN ln -s /conf/settings.local.php /var/www/html/web/sites/default/settings.override.php
+
+# Config user data
+VOLUME /var/www/html/web/sites/default/files
+VOLUME /data
+ENV D8_PRIVATE_PATH=/data
+
+WORKDIR /var/www/html
